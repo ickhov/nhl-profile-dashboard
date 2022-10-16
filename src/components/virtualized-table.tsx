@@ -149,6 +149,12 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
               sx={{
                 width,
                 left: currentOffset,
+                ...(column.formatData != null && {
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  display: "flex",
+                  alignItems: "center",
+                }),
               }}
             >
               {value}

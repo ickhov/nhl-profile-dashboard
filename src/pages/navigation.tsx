@@ -3,8 +3,12 @@ import { StyledAppBar } from "../components";
 const Navigation = () => {
   const menu = [
     {
-      label: "Teams",
+      label: "Home",
       dest: "",
+    },
+    {
+      label: "Teams",
+      dest: "teams",
     },
   ];
 

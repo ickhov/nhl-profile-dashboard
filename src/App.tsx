@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Navigation, Teams } from "./pages";
+import { Home, Navigation, NotFound, TeamProfile, Teams } from "./pages";
 import defaultTheme from "./styles/theme";
 
 const App = () => {
@@ -20,8 +20,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigation />}>
-            <Route path="" element={<Teams />} />
-            <Route path="*" element={<Navigate to="" replace />} />
+            <Route path="" element={<Home />} />
+            <Route path="teams" element={<Teams />} />
+            <Route path="teams/:id" element={<TeamProfile />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

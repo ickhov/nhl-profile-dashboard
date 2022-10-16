@@ -1,6 +1,7 @@
 import Conference from "./conference";
 import Division from "./division";
 import Franchise from "./franchise";
+import Roster from "./roster";
 import Venue from "./venue";
 
 export default interface Team {
@@ -19,4 +20,7 @@ export default interface Team {
   officialSiteUrl: string;
   franchiseId: number;
   active: boolean;
+  roster?: {
+    roster?: Roster[]
+  }
 }
