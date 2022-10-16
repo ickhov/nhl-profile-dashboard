@@ -3,7 +3,7 @@ import React from "react";
 export default interface TeamTable {
   id: number;
   name: string;
-  venueName: string;
+  conferenceName: string;
   divisionName: string;
-  Action: React.ReactNode;
+  Action: string | React.ReactNode;
 }

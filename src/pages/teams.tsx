@@ -1,27 +1,43 @@
-// import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import { Button, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Column, StyledBox, VirtualizedTable } from "../components";
-import URLS from "../static/urls";
+import { getTeamLogo } from "../misc/images";
+import URLS from "../misc/urls";
 import { Team, TeamTable } from "../types";
 
 const Teams = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const [teams, setTeams] = React.useState<Team[]>([]);
   const [tableData, setTableData] = React.useState<TeamTable[]>([]);
   const columns: Column<TeamTable>[] = [
     {
+      key: "id",
+      label: "",
+      width:60,
+      formatData: (data) => (
+        <Box>
+          <Avatar
+            alt={`team-${data}-logo`}
+            src={getTeamLogo(data)}
+            sx={{
+              width: 30,
+              height: 30,
+              border: (theme) => `1px solid ${theme.palette.text.secondary}`,
+            }}
+          />
+        </Box>
+      ),
+    },
+    {
       key: "name",
-      label: "Name",
+      label: "Team",
       width: 250,
     },
     {
-      key: "venueName",
-      label: "Venue",
+      key: "conferenceName",
+      label: "Conference",
       width: 250,
     },
     {
@@ -33,11 +49,29 @@ const Teams = () => {
       key: "Action",
       label: "Action",
       width: 250,
+      formatData: (data) => (
+        data ? (
+          <Button
+            variant="text"
+            sx={{
+              padding: 0,
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+            onClick={() => window.open(data, "_blank")}
+          >
+            Visit Official Website
+          </Button>
+        ) : (
+          <Typography>N/A</Typography>
+        )
+      )
     },
   ];
 
   const handleRowClick = (data: TeamTable) => {
-    navigate(`/${data.id}`);
+    navigate(`/teams/${data.id}`);
   };
 
   // fetch team data
@@ -60,37 +94,20 @@ const Teams = () => {
       ...teams.map((team) => ({
         id: team.id,
         name: team.name,
-        venueName: team.venue?.name || "N/A",
+        conferenceName: team.conference?.name || "N/A",
         divisionName: team.division?.name || "N/A",
-        Action: team.officialSiteUrl ? (
-          <Button
-            variant="text"
-            sx={{
-              padding: 0,
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-            }}
-            onClick={() => window.open(team.officialSiteUrl, "_blank")}
-          >
-            Visit Official Website
-          </Button>
-        ) : (
-          <Typography>N/A</Typography>
-        ),
+        Action: team.officialSiteUrl,
       })),
     ]);
   }, [teams]);
 
+  // update document title
+  React.useEffect(() => {
+    document.title = "Teams";
+  }, []);
+
   return (
-    <StyledBox
-      sx={{
-        [theme.breakpoints.up("md")]: {
-          maxWidth: "1200px",
-          padding: theme.spacing(2),
-        },
-      }}
-    >
+    <StyledBox>
       <VirtualizedTable
         columns={columns}
         data={tableData}
