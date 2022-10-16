@@ -42,7 +42,7 @@ const TeamProfile = () => {
       }
     };
     fetchTeam();
-  }, [id]);
+  }, [id, navigate]);
 
   // update document title based on team name
   React.useEffect(() => {

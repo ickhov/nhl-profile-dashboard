@@ -1,7 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home, Navigation, NotFound, TeamProfile, Teams } from "./pages";
 import defaultTheme from "./styles/theme";
