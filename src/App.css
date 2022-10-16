@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* Hide scrollbar in table header */
+.virtualized-table-header {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.virtualized-table-header::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* style the virtualize table row */
+.virtualized-table-row {
+  cursor: pointer
+}
+.virtualized-table-row:hover > * {
+  background-color: #0000000a;
+}
