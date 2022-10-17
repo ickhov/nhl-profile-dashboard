@@ -67,6 +67,7 @@ const TeamProfile = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            padding: theme.spacing(2, 0),
           }}
         >
           <StyledTitle>{team.name}</StyledTitle>

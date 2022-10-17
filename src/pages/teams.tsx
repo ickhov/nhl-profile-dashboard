@@ -2,7 +2,13 @@ import { Avatar, Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Column, StyledBox, VirtualizedTable } from "../components";
+import {
+  AutocompleteOptionsKeyValueInput,
+  Column,
+  StyledAutocomplete,
+  StyledBox,
+  VirtualizedTable,
+} from "../components";
 import { getTeamLogo } from "../misc/images";
 import URLS from "../misc/urls";
 import { Team, TeamTable } from "../types";
@@ -10,24 +16,25 @@ import { Team, TeamTable } from "../types";
 const Teams = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = React.useState<Team[]>([]);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [searchData, setSearchData] = React.useState<
+    AutocompleteOptionsKeyValueInput[]
+  >([]);
   const [tableData, setTableData] = React.useState<TeamTable[]>([]);
   const columns: Column<TeamTable>[] = [
     {
       key: "id",
       label: "",
-      width:60,
+      width: 60,
       formatData: (data) => (
-        <Box>
-          <Avatar
-            alt={`team-${data}-logo`}
-            src={getTeamLogo(data)}
-            sx={{
-              width: 30,
-              height: 30,
-              border: (theme) => `1px solid ${theme.palette.text.secondary}`,
-            }}
-          />
-        </Box>
+        <img
+          alt={`team-${data}-logo`}
+          src={getTeamLogo(data)}
+          style={{
+            width: 30,
+            height: 30,
+          }}
+        />
       ),
     },
     {
@@ -49,7 +56,7 @@ const Teams = () => {
       key: "Action",
       label: "Action",
       width: 250,
-      formatData: (data) => (
+      formatData: (data) =>
         data ? (
           <Button
             variant="text"
@@ -65,13 +72,20 @@ const Teams = () => {
           </Button>
         ) : (
           <Typography>N/A</Typography>
-        )
-      )
+        ),
     },
   ];
 
   const handleRowClick = (data: TeamTable) => {
     navigate(`/teams/${data.id}`);
+  };
+
+  const handleSearchValueChange = (data: string) => {
+    setSearchValue(data);
+  };
+
+  const handleSearchInputChange = (data: string) => {
+    if (data === "") setSearchValue(data);
   };
 
   // fetch team data
@@ -90,16 +104,39 @@ const Teams = () => {
 
   // format team data into table data
   React.useEffect(() => {
-    setTableData([
+    setSearchData([
       ...teams.map((team) => ({
-        id: team.id,
-        name: team.name,
-        conferenceName: team.conference?.name || "N/A",
-        divisionName: team.division?.name || "N/A",
-        Action: team.officialSiteUrl,
+        key: team.id.toString(),
+        value: team.name,
       })),
     ]);
   }, [teams]);
+
+  // update table based on search value
+  React.useEffect(() => {
+    if (searchValue !== "")
+      setTableData([
+        ...teams
+          .filter((item) => item.id.toString() === searchValue)
+          .map((team) => ({
+            id: team.id,
+            name: team.name,
+            conferenceName: team.conference?.name || "N/A",
+            divisionName: team.division?.name || "N/A",
+            Action: team.officialSiteUrl,
+          })),
+      ]);
+    else
+      setTableData([
+        ...teams.map((team) => ({
+          id: team.id,
+          name: team.name,
+          conferenceName: team.conference?.name || "N/A",
+          divisionName: team.division?.name || "N/A",
+          Action: team.officialSiteUrl,
+        })),
+      ]);
+  }, [teams, searchValue]);
 
   // update document title
   React.useEffect(() => {
@@ -108,10 +145,21 @@ const Teams = () => {
 
   return (
     <StyledBox>
+      <StyledAutocomplete
+        label="Search for teams"
+        options={searchData}
+        value={searchValue}
+        onChange={handleSearchValueChange}
+        onInputChange={handleSearchInputChange}
+        sx={{ marginBottom: (theme) => theme.spacing(2) }}
+      />
       <VirtualizedTable
         columns={columns}
         data={tableData}
         onRowClick={handleRowClick}
+        sx={{
+          height: 'calc(100% - 130px)'
+        }}
       />
     </StyledBox>
   );
