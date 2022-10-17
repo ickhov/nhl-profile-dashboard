@@ -3,7 +3,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home, Navigation, NotFound, TeamProfile, Teams } from "./pages";
+import {
+  Home,
+  Navigation,
+  NotFound,
+  PlayerProfile,
+  TeamProfile,
+  Teams,
+} from "./pages";
 import defaultTheme from "./styles/theme";
 
 const App = () => {
@@ -23,6 +30,7 @@ const App = () => {
             <Route path="" element={<Home />} />
             <Route path="teams" element={<Teams />} />
             <Route path="teams/:id" element={<TeamProfile />} />
+            <Route path="players/:id" element={<PlayerProfile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
