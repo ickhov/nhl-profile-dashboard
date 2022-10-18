@@ -1,7 +1,12 @@
 import { Box, Card, CardContent, CardMedia, Grid } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { StyledSubtitle } from "../components";
+import {
+  AutocompleteOptionsKeyValueInput,
+  StyledAutocomplete,
+  StyledSubtitle,
+} from "../components";
 import { Roster } from "../types";
 
 interface TeamProfileRosterProps {
@@ -48,6 +53,38 @@ const TeamProfileRosterCard = (props: TeamProfileRosterCardProps) => {
 
 const TeamProfileRoster = (props: TeamProfileRosterProps) => {
   const { tab, index, data } = props;
+  const [searchValue, setSearchValue] = React.useState("");
+  const [searchData, setSearchData] = React.useState<
+    AutocompleteOptionsKeyValueInput[]
+  >([]);
+  const [cardData, setCardData] = React.useState<Roster[]>([]);
+
+  const handleSearchValueChange = (data: string) => {
+    setSearchValue(data);
+  };
+
+  const handleSearchInputChange = (data: string) => {
+    if (data === "") setSearchValue(data);
+  };
+
+  // format roster data into search data
+  React.useEffect(() => {
+    setSearchData([
+      ...data.map((person) => ({
+        id: person.person.id.toString(),
+        label: person.person.fullName,
+      })),
+    ]);
+  }, [data]);
+
+  // update table based on search value
+  React.useEffect(() => {
+    if (searchValue !== "")
+      setCardData([
+        ...data.filter((item) => item.person.id.toString() === searchValue),
+      ]);
+    else setCardData([...data]);
+  }, [data, searchValue]);
 
   return (
     <Box
@@ -59,8 +96,16 @@ const TeamProfileRoster = (props: TeamProfileRosterProps) => {
         alignItems: "center",
       }}
     >
+      <StyledAutocomplete
+        label="Search for players"
+        options={searchData}
+        value={searchValue}
+        onChange={handleSearchValueChange}
+        onInputChange={handleSearchInputChange}
+        sx={{ marginBottom: (theme) => theme.spacing(2) }}
+      />
       <Grid container spacing={2}>
-        {data.map((item) => (
+        {cardData.map((item) => (
           <Grid key={item.person.id} item xs={12} sm={6} md={4}>
             <TeamProfileRosterCard
               playerId={item.person.id}

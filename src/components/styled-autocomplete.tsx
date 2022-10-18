@@ -3,17 +3,13 @@ import React from "react";
 import StyledTextField from "./styled-text-field";
 
 export interface AutocompleteOptionsKeyValueInput {
-  key: string;
-  value: string;
-}
-interface AutocompleteOptionsKeyValueInternalInput {
   id: string;
   label: string;
 }
 interface StyledAutocompleteProps {
   label: string;
   options: string[] | AutocompleteOptionsKeyValueInput[];
-  value: string;
+  value?: string;
   onChange: (data: string) => void;
   onInputChange?: (data: string) => void;
   sx?: FormControlProps["sx"];
@@ -25,7 +21,7 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
   const {
     label,
     options,
-    value,
+    value = "",
     onChange,
     onInputChange,
     sx,
@@ -33,51 +29,42 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
     helperText,
   } = props;
   const [internalValue, setInternalValue] =
-    React.useState<AutocompleteOptionsKeyValueInternalInput>({
-      id: "1",
-      label: "",
-    });
+    React.useState<AutocompleteOptionsKeyValueInput | null>(null);
   const [autocompleteOptions, setAutocompleteOptions] = React.useState<
-    AutocompleteOptionsKeyValueInternalInput[]
+    AutocompleteOptionsKeyValueInput[]
   >([]);
   // compare functions to sort options of type { key: string; value: string }[]
   const compare = (
     a: AutocompleteOptionsKeyValueInput,
     b: AutocompleteOptionsKeyValueInput
   ) => {
-    if (a.value < b.value) return -1;
-    if (a.value > b.value) return 1;
+    if (a.label < b.label) return -1;
+    if (a.label > b.label) return 1;
     return 0;
   };
 
   React.useEffect(() => {
-    if (options.length > 0 && typeof options[0] === "string")
-      setAutocompleteOptions(
-        [...(options as string[])].sort().map((item) => ({
-          id: item,
-          label: item,
-        }))
-      );
-    else
-      setAutocompleteOptions([
-        ...(options as AutocompleteOptionsKeyValueInput[])
-          .sort(compare)
-          .map((item) => ({
-            id: item.key,
-            label: item.value,
-          })),
-      ]);
+    if (options.length > 0) {
+      if (typeof options[0] === "string")
+        setAutocompleteOptions(
+          [...(options as string[])].sort().map((item) => ({
+            id: item,
+            label: item,
+          }))
+        );
+      else
+        setAutocompleteOptions([
+          ...(options as AutocompleteOptionsKeyValueInput[]).sort(compare),
+        ]);
+    }
   }, [options]);
 
   React.useEffect(() => {
-    if (autocompleteOptions.length > 0 && value !== "") {
+    if (autocompleteOptions.length > 0) {
       const item = autocompleteOptions.find((e) => e.id === value);
       if (item) setInternalValue(item);
-    } else if (value === "")
-      setInternalValue({
-        id: "1",
-        label: "",
-      });
+      else setInternalValue(null);
+    } else setInternalValue(null);
   }, [autocompleteOptions, value]);
 
   return (
@@ -88,7 +75,7 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
       value={internalValue}
       onChange={(
         event: React.SyntheticEvent<Element, Event>,
-        newValue: AutocompleteOptionsKeyValueInternalInput | null
+        newValue: AutocompleteOptionsKeyValueInput | null
       ) => {
         if (newValue) onChange(newValue.id);
       }}
@@ -96,11 +83,12 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
         event: React.SyntheticEvent<Element, Event>,
         value: string
       ) => {
+        if (value === "") onChange("");
         if (onInputChange) onInputChange(value);
       }}
       isOptionEqualToValue={(
-        option: AutocompleteOptionsKeyValueInternalInput,
-        value: AutocompleteOptionsKeyValueInternalInput
+        option: AutocompleteOptionsKeyValueInput,
+        value: AutocompleteOptionsKeyValueInput
       ) => option.id === value.id}
       renderInput={(params) => (
         <StyledTextField
@@ -111,7 +99,6 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
           {...params}
         />
       )}
-      clearOnEscape
     />
   );
 };

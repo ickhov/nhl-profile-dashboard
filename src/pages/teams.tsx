@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import {
   Column,
   StyledAutocomplete,
   StyledBox,
-  VirtualizedTable,
+  VirtualizedTable
 } from "../components";
 import { getTeamLogo } from "../misc/images";
 import URLS from "../misc/urls";
@@ -102,12 +102,12 @@ const Teams = () => {
     fetchTeams();
   }, []);
 
-  // format team data into table data
+  // format team data into search data
   React.useEffect(() => {
     setSearchData([
       ...teams.map((team) => ({
-        key: team.id.toString(),
-        value: team.name,
+        id: team.id.toString(),
+        label: team.name,
       })),
     ]);
   }, [teams]);

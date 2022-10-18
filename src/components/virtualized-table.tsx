@@ -72,7 +72,6 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
           offset += width;
           return (
             <StyledColumn
-              noWrap
               key={columKey}
               start={columnIndex === 0}
               end={columnIndex === columns.length - 1}
@@ -97,7 +96,7 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
     []
   );
 
-  const StyledColumn = styled(Typography, {
+  const StyledColumn = styled(Box, {
     shouldForwardProp: (prop) =>
       prop !== "start" && prop !== "end" && prop !== "numeric",
   })<{ start: boolean; end: boolean; numeric: boolean }>(
@@ -142,7 +141,6 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
           offset += width;
           return (
             <StyledColumn
-              noWrap
               key={columKey}
               start={columnIndex === 0}
               end={columnIndex === columns.length - 1}
