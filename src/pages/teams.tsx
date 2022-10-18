@@ -146,6 +146,7 @@ const Teams = () => {
   return (
     <StyledBox>
       <StyledAutocomplete
+        role="teams-team-search"
         label="Search for teams"
         options={searchData}
         value={searchValue}
@@ -154,11 +155,12 @@ const Teams = () => {
         sx={{ marginBottom: (theme) => theme.spacing(2) }}
       />
       <VirtualizedTable
+        role="teams-table"
         columns={columns}
         data={tableData}
         onRowClick={handleRowClick}
         sx={{
-          height: 'calc(100% - 130px)'
+          height: "calc(100% - 130px)",
         }}
       />
     </StyledBox>

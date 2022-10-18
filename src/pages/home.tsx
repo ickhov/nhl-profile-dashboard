@@ -29,6 +29,10 @@ const Home = () => {
     }
   }, [animationIndex, fullWelcomeMessage]);
 
+  React.useEffect(() => {
+    document.title = "Home";
+  }, []);
+
   return (
     <StyledBox>
       <Box

@@ -7,6 +7,6 @@ export default interface Roster {
     fullName: Player["fullName"];
     link: Player["link"];
   };
-  jerseyNumber: number;
+  jerseyNumber: string;
   position: PrimaryPosition;
 }

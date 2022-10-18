@@ -1,12 +1,10 @@
-import React from "react";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import { Home } from "../pages";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-afterEach(cleanup);
+import { Home } from "../pages";
 
 describe("<Home />", () => {
-  it("should load a welcome message", async () => {
+  afterEach(cleanup);
+  it("should have a welcome message", async () => {
     render(
       <BrowserRouter>
         <Routes>
@@ -20,7 +18,7 @@ describe("<Home />", () => {
       );
     });
   });
-  it("should load a welcome message", async () => {
+  it('should have a "View Team" button', async () => {
     render(
       <BrowserRouter>
         <Routes>

@@ -1,5 +1,6 @@
 const getTeamLogo = (teamId: string) =>
   `http://www-league.nhlstatic.com/nhl.com/builds/site-core/d1b262bacd4892b22a38e8708cdb10c8327ff73e_1579810224/images/logos/team/current/team-${teamId}-light.svg`;
-
+const getPlayerLogo = (playerId: string) =>
+  `https://assets.nhle.com/mugs/nhl/default-skater.png`;
   
-export { getTeamLogo };
+export { getTeamLogo, getPlayerLogo };

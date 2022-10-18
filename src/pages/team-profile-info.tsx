@@ -14,14 +14,23 @@ interface TeamProfileInfoCardProps {
   content: string;
 }
 
-const TeamProfileInfoCard = (props: TeamProfileInfoCardProps) => (
-  <Card sx={{ background: (theme) => alpha(theme.palette.primary.main, 0.1) }}>
-    <CardContent>
-      <StyledSubtitle>{props.label}</StyledSubtitle>
-      <Typography>{props.content}</Typography>
-    </CardContent>
-  </Card>
-);
+const TeamProfileInfoCard = (props: TeamProfileInfoCardProps) => {
+  const key = props.label.toLowerCase();
+  return (
+    <Card
+      sx={{ background: (theme) => alpha(theme.palette.primary.main, 0.1) }}
+    >
+      <CardContent>
+        <StyledSubtitle role={`player-profile-info-card-${key}-title`}>
+          {props.label}
+        </StyledSubtitle>
+        <Typography role={`player-profile-info-card-${key}-content`}>
+          {props.content}
+        </Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 const TeamProfileInfo = (props: TeamProfileInfoProps) => {
   const { tab, index, data } = props;

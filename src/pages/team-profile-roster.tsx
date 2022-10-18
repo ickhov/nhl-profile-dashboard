@@ -7,6 +7,7 @@ import {
   StyledAutocomplete,
   StyledSubtitle,
 } from "../components";
+import { getPlayerLogo } from "../misc/images";
 import { Roster } from "../types";
 
 interface TeamProfileRosterProps {
@@ -23,6 +24,7 @@ interface TeamProfileRosterCardProps {
 const TeamProfileRosterCard = (props: TeamProfileRosterCardProps) => {
   const { playerId, name } = props;
   const navigate = useNavigate();
+  const playerLogo = getPlayerLogo(playerId.toString());
 
   const handleCardClick = () => {
     navigate(`/players/${playerId}`);
@@ -37,15 +39,21 @@ const TeamProfileRosterCard = (props: TeamProfileRosterCardProps) => {
       onClick={handleCardClick}
     >
       <CardMedia
+        role={`player-profile-roster-player-${playerId}-image`}
         component="img"
         height="200"
-        image="https://assets.nhle.com/mugs/nhl/default-skater.png"
+        image={playerLogo}
         alt="person image"
       />
       <CardContent
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
-        <StyledSubtitle gutterBottom={false}>{name}</StyledSubtitle>
+        <StyledSubtitle
+          role={`player-profile-roster-player-${playerId}-full-name`}
+          gutterBottom={false}
+        >
+          {name}
+        </StyledSubtitle>
       </CardContent>
     </Card>
   );
@@ -97,6 +105,7 @@ const TeamProfileRoster = (props: TeamProfileRosterProps) => {
       }}
     >
       <StyledAutocomplete
+        role="player-profile-roster-player-search"
         label="Search for players"
         options={searchData}
         value={searchValue}

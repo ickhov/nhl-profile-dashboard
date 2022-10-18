@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import { Player } from "../types";
 
 interface PlayerProfileInfoProps {
@@ -14,6 +14,7 @@ interface PlayerProfileInfoRowProps {
 const PlayerProfileInfoRow = (props: PlayerProfileInfoRowProps) => {
   const theme = useTheme();
   const borderRadius = `${theme.shape.borderRadius}px`;
+  const key = props.label.split(" ").join("-").toLowerCase();
   return (
     <Box
       sx={{
@@ -24,6 +25,7 @@ const PlayerProfileInfoRow = (props: PlayerProfileInfoRowProps) => {
       }}
     >
       <Typography
+        role={`player-profile-info-row-${key}-title`}
         sx={{
           width: "100%",
           textAlign: "center",
@@ -37,6 +39,7 @@ const PlayerProfileInfoRow = (props: PlayerProfileInfoRowProps) => {
         {props.label}
       </Typography>
       <Typography
+        role={`player-profile-info-row-${key}-content`}
         sx={{
           width: "100%",
           textAlign: "center",

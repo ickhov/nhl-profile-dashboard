@@ -77,6 +77,7 @@ const StyledAppBar = (props: AppBarProps) => {
             }}
           >
             <StyledLink
+              role="app-bar-title"
               key="app-bar-title"
               to={""}
               sx={{
@@ -100,7 +101,11 @@ const StyledAppBar = (props: AppBarProps) => {
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
             {menu.map((item) => (
-              <StyledLink key={item.label} to={item.dest}>
+              <StyledLink
+                role={`app-bar-link-${item.label.toLowerCase()}-web-view`}
+                key={item.label}
+                to={item.dest}
+              >
                 {item.label}
               </StyledLink>
             ))}
@@ -131,6 +136,7 @@ const StyledAppBar = (props: AppBarProps) => {
               {menu.map((item) => (
                 <ListItem key={item.label} disablePadding>
                   <StyledLink
+                    role={`app-bar-link-${item.label.toLowerCase()}-mobile-view`}
                     key={item.label}
                     to={item.dest}
                     sx={{

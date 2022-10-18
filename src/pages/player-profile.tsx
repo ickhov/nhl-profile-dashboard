@@ -4,7 +4,7 @@ import axios from "axios";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { StyledBox, StyledTitle } from "../components";
-import { getTeamLogo } from "../misc/images";
+import { getPlayerLogo, getTeamLogo } from "../misc/images";
 import URLS from "../misc/urls";
 import { Player } from "../types";
 import PlayerProfileInfo from "./player-profile-info";
@@ -14,7 +14,8 @@ const PlayerProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [player, setPlayer] = React.useState<Player>();
-  const playerLogo = "https://assets.nhle.com/mugs/nhl/default-skater.png";
+  const playerLogo = id ? getPlayerLogo(id) : "";
+  const teamLogo = player ? getTeamLogo(player.currentTeam.id.toString()) : "";
 
   const handleTeamNameClick = () => {
     navigate(`/teams/${player?.currentTeam.id}`);
@@ -62,6 +63,7 @@ const PlayerProfile = () => {
         }}
       >
         <Avatar
+          role="player-profile-image"
           src={playerLogo}
           alt={`player-${id}-profile-picture`}
           sx={{
@@ -84,9 +86,18 @@ const PlayerProfile = () => {
               margin: theme.spacing(0, 2),
             }}
           >
-            <StyledTitle>{player.fullName}</StyledTitle>
-            <Typography component='span' fontSize="1rem" fontWeight={700} gutterBottom>
+            <StyledTitle role="player-profile-full-name">
+              {player.fullName}
+            </StyledTitle>
+            <Typography
+              role="player-profile-number-and-position"
+              component="span"
+              fontSize="1rem"
+              fontWeight={700}
+              gutterBottom
+            >
               <Chip
+                role="player-profile-team-name"
                 color="primary"
                 label={player.currentTeam.name}
                 onClick={handleTeamNameClick}
@@ -103,21 +114,48 @@ const PlayerProfile = () => {
                 },
               }}
             >
-              {player.captain && <Chip color="success" label="Captain" />}
+              {player.captain && (
+                <Chip
+                  role="player-profile-captain-chip"
+                  color="success"
+                  label="Captain"
+                />
+              )}
               {player.alternateCaptain && (
-                <Chip color="success" label="Alternate Captain" />
+                <Chip
+                  role="player-profile-alternate-captain-chip"
+                  color="success"
+                  label="Alternate Captain"
+                />
               )}
               {!player.captain && !player.alternateCaptain && (
-                <Chip color="warning" label="Not a Captain" />
+                <Chip
+                  role="player-profile-not-a-captain-chip"
+                  color="warning"
+                  label="Not a Captain"
+                />
               )}
-              {!player.rookie && <Chip color="success" label="Professional" />}
-              {player.rookie && <Chip color="warning" label="Rookie" />}
+              {!player.rookie && (
+                <Chip
+                  role="player-profile-not-a-rookie-chip"
+                  color="success"
+                  label="Professional"
+                />
+              )}
+              {player.rookie && (
+                <Chip
+                  role="player-profile-rookie-chip"
+                  color="warning"
+                  label="Rookie"
+                />
+              )}
             </Box>
           </Box>
         )}
       </Box>
       {/* Team Logo */}
       <Box
+        role="player-profile-team-logo"
         sx={{
           position: "absolute",
           opacity: 0.2,
@@ -131,7 +169,7 @@ const PlayerProfile = () => {
       >
         <img
           style={{ width: "100%", height: "100%", maxWidth: "600px" }}
-          src={player ? getTeamLogo(player.currentTeam.id.toString()) : ""}
+          src={teamLogo}
           alt={`team-${id}-logo`}
           loading="lazy"
         />

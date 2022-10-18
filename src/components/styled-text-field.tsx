@@ -1,11 +1,6 @@
 import { InputProps } from "@mui/material/Input";
 import { styled } from "@mui/material/styles";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
-import React from "react";
-import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
-import { IconButton, InputAdornment, Tooltip } from "@mui/material";
 
 type StyledTextFieldProps = TextFieldProps & {
   hasValue?: boolean;
