@@ -34,7 +34,6 @@ Runs the test files inside the __tests__ folder using Jest including details abo
 
 4. Player Profile: http://localhost:3000/players/{playerId}
 
-
 ## Tests
 
 I use Jest to perform component testing on the pages. The tests in the __tests__ folder has a counterpart in the pages folder. I only test to see if the necessary components and their values are rendered. I did not check their styling whatsoever.
