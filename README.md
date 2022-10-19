@@ -2,6 +2,12 @@
 
 This project displays basic information about NHL teams and players.
 
+## Running the Project
+
+In the project directory, run the following commands in order:
+1. `npm install`
+2. `npm start`
+
 ## Available Scripts
 
 In the project directory, you can run:
