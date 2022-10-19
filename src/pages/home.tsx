@@ -29,6 +29,10 @@ const Home = () => {
     }
   }, [animationIndex, fullWelcomeMessage]);
 
+  React.useEffect(() => {
+    document.title = "Home";
+  }, []);
+
   return (
     <StyledBox>
       <Box
@@ -42,6 +46,7 @@ const Home = () => {
         }}
       >
         <StyledTitle
+          role="home-welcome-message"
           sx={{
             width: "100%",
             fontSize: {
@@ -55,6 +60,7 @@ const Home = () => {
           {welcomeMessage}
         </StyledTitle>
         <StyledButton
+          role="home-view-teams-button"
           onClick={handleViewTeamsClick}
           sx={{
             background: theme.palette.primary.main,

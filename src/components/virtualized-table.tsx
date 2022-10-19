@@ -1,4 +1,4 @@
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { styled, SxProps, Theme, useTheme } from "@mui/material/styles";
 import React, { useMemo } from "react";
 import { FixedSizeList as List } from "react-window";
@@ -17,6 +17,7 @@ interface VirtualizedTableProps<T> {
   onRowClick?: (data: T) => void;
   onLastRow?: () => void;
   sx?: SxProps<Theme>;
+  role?: string;
 }
 
 interface HeaderProps<T> {
@@ -39,7 +40,7 @@ interface RowProps<T> {
 
 export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
   const theme = useTheme();
-  const { columns, data, onRowClick, onLastRow, sx } = props;
+  const { columns, data, onRowClick, onLastRow, sx, role } = props;
   const [height, setHeight] = React.useState<number>(0);
   const [width, setWidth] = React.useState<number>(0);
   const ROW_HEIGHT = 54;
@@ -252,6 +253,7 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
 
   return (
     <Box
+      role={role}
       ref={parentRef}
       sx={{
         width: "100%",
@@ -259,7 +261,7 @@ export const VirtualizedTable = <T,>(props: VirtualizedTableProps<T>) => {
         display: "flex",
         flexDirection: "column",
         flex: "1 0",
-        ...sx
+        ...sx,
       }}
     >
       {/* Headers */}

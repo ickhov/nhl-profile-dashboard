@@ -31,11 +31,16 @@ const NotFound = () => {
           flex: "1 0",
         }}
       >
-        <img src={Dog404} alt="404 Not Found logo" />
-        <StyledTitle sx={{ margin: theme.spacing(2.5, 0) }}>
+        {/* eslint-disable-next-line */}
+        <img role="404-not-found-logo" src={Dog404} alt="404 Not Found logo" />
+        <StyledTitle
+          role="404-not-found-message"
+          sx={{ margin: theme.spacing(2.5, 0) }}
+        >
           Oops! We could not find the page that you&apos;re looking for.
         </StyledTitle>
         <StyledButton
+          role="404-not-found-back-to-home-button"
           onClick={handleRedirectToHomeClick}
           sx={{
             background: theme.palette.text.primary,

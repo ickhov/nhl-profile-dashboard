@@ -7,6 +7,7 @@ export interface AutocompleteOptionsKeyValueInput {
   label: string;
 }
 interface StyledAutocompleteProps {
+  role?: string;
   label: string;
   options: string[] | AutocompleteOptionsKeyValueInput[];
   value?: string;
@@ -19,6 +20,7 @@ interface StyledAutocompleteProps {
 
 export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
   const {
+    role,
     label,
     options,
     value = "",
@@ -69,6 +71,7 @@ export const StyledAutocomplete = (props: StyledAutocompleteProps) => {
 
   return (
     <Autocomplete
+      role={role}
       id="autocomplete-input"
       options={autocompleteOptions}
       sx={{ width: "100%", ...sx }}

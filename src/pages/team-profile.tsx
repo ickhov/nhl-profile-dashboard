@@ -55,6 +55,8 @@ const TeamProfile = () => {
   return (
     <StyledBox>
       <img
+        //eslint-disable-next-line
+        role="team-profile-logo"
         style={{ width: "100%", height: "200px" }}
         src={teamLogo}
         alt={`team-${id}-logo`}
@@ -70,11 +72,16 @@ const TeamProfile = () => {
             padding: theme.spacing(2, 0),
           }}
         >
-          <StyledTitle>{team.name}</StyledTitle>
+          <StyledTitle role="team-profile-name">{team.name}</StyledTitle>
           <Box sx={{ marginBottom: theme.spacing(2) }}>
             <Tabs value={tabValue} onChange={handleTabValueChange}>
               {tabMenu.map((item, index) => (
-                <Tab key={item} label={item} value={index} />
+                <Tab
+                  role={`team-profile-tab-${item.toLowerCase()}`}
+                  key={item}
+                  label={item}
+                  value={index}
+                />
               ))}
             </Tabs>
           </Box>
