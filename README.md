@@ -26,10 +26,12 @@ Runs the test files inside the __tests__ folder using Jest including details abo
 
 1. Home: http://localhost:3000
 
-2. Teams Table: http://localhost:3000/teams\
+2. Teams Table: http://localhost:3000/teams
+
 **Note: You can search for teams using the autocomplete text field.**
 
-3. Team Profile: http://localhost:3000/teams/{teamId}\
+3. Team Profile: http://localhost:3000/teams/{teamId}
+
 **Note: In the Roster tab, you can search for players using the autocomplete text field. You can click the player card to view their profile.**
 
 4. Player Profile: http://localhost:3000/players/{playerId}
