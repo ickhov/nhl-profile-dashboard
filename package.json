@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "test-with-details": "jest --verbose",
+    "test:verbose": "jest --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
